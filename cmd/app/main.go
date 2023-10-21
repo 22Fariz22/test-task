@@ -1,6 +1,11 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/test-task/internal/app"
+	"github.com/test-task/internal/config"
+)
 func main(){
 	//Configuration
 	cfg,err:= config.NewConfig()
