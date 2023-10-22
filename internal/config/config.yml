@@ -1,15 +1,16 @@
 http:
+  address: localhost
   port: ':8080'
 
 logger:
   log_level: 'debug'
 
 postgres:
-  PostgresqlHost: localhost
-  PostgresqlPort: 5432
-  PostgresqlUser: postgres
-  PostgresqlPassword: postgres
-  PostgresqlDbname: person_db
+  pg_host: localhost
+  pg_port: 5432
+  pg_user: postgres
+  pg_password: postgres
+  pg_dbname: person_db
   # PostgresqlSslmode: false
   # PgDriver: pgx
 

@@ -27,8 +27,10 @@ type App struct {
 }
 
 func NewApp(cfg *config.Config) *App {
+	//"postgres://postgres:postgres@127.0.0.1:5432/person_db"
+	fmt.Println("cfg.PostgresqlPassword: ",cfg.PostgresqlPassword)
 	databaseDSN := fmt.Sprintf(
-		"postgres//%s:%s@%s:%s/%s",
+		"postgres://%s:%s@%s:%s/%s",
 	 cfg.PostgresqlUser,
 	 cfg.PostgresqlPassword,
 		cfg.PostgresqlHost,
@@ -71,7 +73,7 @@ func (a *App) Run() {
 
 	// HTTP Server
 	a.httpServer = &http.Server{
-		Addr:           ":"+a.cfg.Port,
+		Addr:           a.cfg.Address+a.cfg.Port,
 		Handler:        router,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
