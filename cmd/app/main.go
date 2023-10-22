@@ -6,6 +6,7 @@ import (
 	"github.com/test-task/internal/app"
 	"github.com/test-task/internal/config"
 )
+
 func main(){
 	//Configuration
 	cfg,err:= config.NewConfig()

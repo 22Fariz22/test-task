@@ -13,32 +13,41 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/test-task/internal/config"
 	"github.com/test-task/internal/user"
+	userRouter "github.com/test-task/internal/user/delivery/http"
 	"github.com/test-task/internal/user/repository"
 	"github.com/test-task/internal/user/usecase"
 	"github.com/test-task/pkg/logger"
 	"github.com/test-task/pkg/postgres"
 )
 
-
 type App struct {
 	cfg        *config.Config
 	httpServer *http.Server
-	userUC user.UseCase
+	userUC     user.UseCase
 }
 
-func NewApp(cfg *config.Config)*App{
-// Repository
-	db, err := postgres.New(cfg.DatabaseURI, postgres.MaxPoolSize(2))
+func NewApp(cfg *config.Config) *App {
+	databaseDSN := fmt.Sprintf(
+		"postgres//%s:%s@%s:%s/%s",
+	 cfg.PostgresqlUser,
+	 cfg.PostgresqlPassword,
+		cfg.PostgresqlHost,
+		cfg.PostgresqlPort,
+		cfg.PostgresqlDbname,
+	)
+
+	// Repository
+	db, err := postgres.New(databaseDSN, postgres.MaxPoolSize(2))
 	if err != nil {
 		log.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
 	}
 
 	userRepo := repository.NewPgRepository(db)
-	
+
 	return &App{
-		cfg: cfg,
+		cfg:        cfg,
 		httpServer: nil,
-		userUC: usecase.NewUseCase(userRepo),
+		userUC:     usecase.NewUseCase(userRepo),
 	}
 }
 
@@ -46,7 +55,7 @@ func NewPgRepository(db *postgres.Postgres) {
 	panic("unimplemented")
 }
 
-func (a *App)Run(){
+func (a *App) Run() {
 	l := logger.New("debug")
 
 	// Init gin handler
@@ -58,12 +67,11 @@ func (a *App)Run(){
 
 	api := router.Group("/")
 
-	RegisterHTTPEndpointsUser(l,api,a.userUC)
-	RegisterHTTPEndpointsUser
+	userRouter.RegisterHTTPEndpointsUser(l, api, a.userUC)
 
 	// HTTP Server
 	a.httpServer = &http.Server{
-		Addr:           a.cfg.RunAddress,
+		Addr:           ":"+a.cfg.Port,
 		Handler:        router,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
@@ -87,4 +95,3 @@ func (a *App)Run(){
 
 	a.httpServer.Shutdown(ctx)
 }
-
