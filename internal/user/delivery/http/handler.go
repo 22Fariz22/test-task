@@ -47,6 +47,7 @@ func (h *Handler)Create(c *gin.Context){
 			c.AbortWithStatus(http.StatusInternalServerError)
 			return
 	}
+	
 
 	c.Status(http.StatusOK)
 }
@@ -55,7 +56,6 @@ func (h *Handler)Delete(c *gin.Context){
 		// ctx := context.Background()
 
 	fmt.Println("handler - Delete().")
-
 }
 
 func (h *Handler)Update(c *gin.Context){
