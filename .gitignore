@@ -5,6 +5,9 @@
 # Config
 #.env
 
+#repo
+pgdata/
+
 # Binaries for programs and plugins
 *.exe
 *.exe~

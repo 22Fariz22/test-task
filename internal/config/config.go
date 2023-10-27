@@ -31,6 +31,8 @@ type (
 		PostgresqlUser     string	`env-required:"true" yaml:"pg_user" env:"PG_USER"`
 		PostgresqlPassword string	`env-required:"true" yaml:"pg_password" env:"PG_PASSWORD"`
 		PostgresqlDbname   string	`env-required:"true" yaml:"pg_dbname" env:"PG_DBNAME"`
+		PostgresqlSSLMode  bool	
+		PgDriver           string 
 }
 )
 

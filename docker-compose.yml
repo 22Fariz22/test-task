@@ -21,8 +21,10 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+    # volumes:
+    #   - pg_data:/var/lib/postgres
     volumes:
-      - pg_data:/var/lib/postgres
+    - ./pgdata:/var/lib/postgresql/data
   migrate:
     image: migrate/migrate:v4.15.2
     profiles: ["tools"]

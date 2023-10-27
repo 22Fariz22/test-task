@@ -59,9 +59,14 @@ func (a *App) Run() {
 	l := logger.New("debug")
 
 	l.Info(
-		"HTTP.Address: %s, HTTP.Port: %s",
+		"HTTP.Address: %s, HTTP.Port: %s, pgUser: %s, pg.passw: %s, pgHost:%s, pgPort: %s, pgDbName: %s",
 		a.cfg.HTTP.Address,
 		a.cfg.HTTP.Port,
+		a.cfg.PostgresqlUser,
+	 	a.cfg.PostgresqlPassword,
+		a.cfg.PostgresqlHost,
+		a.cfg.PostgresqlPort,
+		a.cfg.PostgresqlDbname,
 	)
 
 
