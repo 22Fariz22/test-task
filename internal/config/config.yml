@@ -6,7 +6,7 @@ logger:
   log_level: 'debug'
 
 postgres:
-  pg_host: postgesql
+  pg_host: postgres
   pg_port: 5432
   pg_user: postgres
   pg_password: postgres

@@ -35,6 +35,7 @@ func NewApp(cfg *config.Config) *App {
 		cfg.PostgresqlPort,
 		cfg.PostgresqlDbname,
 	)
+	fmt.Println("databaseDSN: ",databaseDSN)
 
 	// Repository
 	db, err := postgres.New(databaseDSN, postgres.MaxPoolSize(2))
