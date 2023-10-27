@@ -11,7 +11,7 @@ func main(){
 	//Configuration
 	cfg,err:= config.NewConfig()
 	if err!=nil{
-		log.Fatalf("Config err: %s",err)
+		log.Fatalf("main.go - config err: %s",err)
 	}
 
 	//Run

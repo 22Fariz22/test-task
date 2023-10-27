@@ -20,7 +20,6 @@ type Postgres struct {
 	maxPoolSize  int
 	connAttempts int
 	connTimeout  time.Duration
-
 	//Builder squirrel.StatementBuilderType
 	Pool *pgxpool.Pool
 }

@@ -29,8 +29,8 @@ type App struct {
 func NewApp(cfg *config.Config) *App {
 	databaseDSN := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s",
-	 cfg.PostgresqlUser,
-	 cfg.PostgresqlPassword,
+	 	cfg.PostgresqlUser,
+	 	cfg.PostgresqlPassword,
 		cfg.PostgresqlHost,
 		cfg.PostgresqlPort,
 		cfg.PostgresqlDbname,
@@ -58,6 +58,13 @@ func NewPgRepository(db *postgres.Postgres) {
 func (a *App) Run() {
 	l := logger.New("debug")
 
+	l.Info(
+		"HTTP.Address: %s, HTTP.Port: %s",
+		a.cfg.HTTP.Address,
+		a.cfg.HTTP.Port,
+	)
+
+
 	// Init gin handler
 	router := gin.Default()
 	router.Use(
@@ -71,12 +78,13 @@ func (a *App) Run() {
 
 	// HTTP Server
 	a.httpServer = &http.Server{
-		Addr:           a.cfg.Address+a.cfg.Port,
+		Addr:           a.cfg.Port,
 		Handler:        router,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
+	
 
 	go func() {
 		if err := a.httpServer.ListenAndServe(); err != nil {
