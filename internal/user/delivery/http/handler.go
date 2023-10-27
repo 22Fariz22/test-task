@@ -2,7 +2,6 @@ package http
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -25,14 +24,10 @@ func NewHandler(l logger.Interface,uc user.UseCase)*Handler{
 }
 
 func (h *Handler)Get(c *gin.Context){
-		// ctx := context.Background()
-
-	fmt.Println("handler - Get().")
+	// ctx := context.Background()
 }
 
 func (h *Handler)Create(c *gin.Context){
-			fmt.Println("handler - Create().")
-
 		ctx := context.Background()
 
 		in:= new(entity.User)
@@ -50,19 +45,30 @@ func (h *Handler)Create(c *gin.Context){
 			return
 	}
 	
-
 	c.Status(http.StatusOK)
 }
 
 func (h *Handler)Delete(c *gin.Context){
-		// ctx := context.Background()
+	ctx := context.Background()
+	
+	in:= new(entity.User)
+    
+	if err := c.BindJSON(in); err != nil {
+		h.l.Error("failed unmarshal userID entity:", err)
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
 
-	fmt.Println("handler - Delete().")
+	err := h.useCase.Delete(ctx,h.l,in)
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+		c.Status(http.StatusOK)
 }
 
 func (h *Handler)Update(c *gin.Context){
 		// ctx := context.Background()
-
-	fmt.Println("handler - Update().")
 
 }
