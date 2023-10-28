@@ -29,8 +29,8 @@ type App struct {
 func NewApp(cfg *config.Config) *App {
 	databaseDSN := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s",
-	 	cfg.PostgresqlUser,
-	 	cfg.PostgresqlPassword,
+		cfg.PostgresqlUser,
+		cfg.PostgresqlPassword,
 		cfg.PostgresqlHost,
 		cfg.PostgresqlPort,
 		cfg.PostgresqlDbname,
@@ -50,7 +50,6 @@ func NewApp(cfg *config.Config) *App {
 		userUC:     usecase.NewUseCase(userRepo),
 	}
 }
-
 
 func (a *App) Run() {
 	l := logger.New("debug")
@@ -74,7 +73,6 @@ func (a *App) Run() {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
-	
 
 	go func() {
 		if err := a.httpServer.ListenAndServe(); err != nil {

@@ -6,9 +6,9 @@ import (
 	"github.com/test-task/pkg/logger"
 )
 
-type Repo interface{
-	Get(ctx context.Context, l logger.Interface)error
-	Delete(ctx context.Context, l logger.Interface,data *entity.User)error
-	Update(ctx context.Context, l logger.Interface,data *entity.User)error
-	Create(ctx context.Context, l logger.Interface, data *entity.User)error
+type Repo interface {
+	Get(ctx context.Context, l logger.Interface) error
+	Delete(ctx context.Context, l logger.Interface, data *entity.User) error
+	Update(ctx context.Context, l logger.Interface, data *entity.User) error
+	Create(ctx context.Context, l logger.Interface, data *entity.User) error
 }

@@ -12,20 +12,19 @@ import (
 	"github.com/test-task/pkg/logger"
 )
 
-
-func RichAPI(ctx context.Context,l logger.Interface,data *entity.User)(*entity.RichData){
+func RichAPI(ctx context.Context, l logger.Interface, data *entity.User) *entity.RichData {
 	//context timeout 5sec
 
-	age :=richAge(ctx,l,data)
-	gender:= richGender(ctx,l,data)
-	natio:=richNatoinality(ctx,l,data)
+	age := richAge(ctx, l, data)
+	gender := richGender(ctx, l, data)
+	natio := richNatoinality(ctx, l, data)
 
-	richData := entity.RichData{Age: age,Gender: gender,Nationality: natio}
+	richData := entity.RichData{Age: age, Gender: gender, Nationality: natio}
 
 	return &richData
 }
 
-func richAge(ctx context.Context,l logger.Interface, data *entity.User)(int){
+func richAge(ctx context.Context, l logger.Interface, data *entity.User) int {
 	type Agify struct {
 		Age int `json:"age"`
 	}
@@ -36,26 +35,26 @@ func richAge(ctx context.Context,l logger.Interface, data *entity.User)(int){
 	res, err := http.Get(req)
 	if err != nil {
 		l.Error("error making http request: %s\n", err)
-		return 0 
+		return 0
 	}
 
-	payload,err:= io.ReadAll(res.Body)
-	if err!=nil{
+	payload, err := io.ReadAll(res.Body)
+	if err != nil {
 		l.Error("can't read api-body request agify", err)
-		return 0 
-	}
-	
-	if err = json.Unmarshal(payload,&agify);err!=nil{
-		l.Error("error unmarshall agify", err)
-		return 0 
+		return 0
 	}
 
-	return agify.Age 
+	if err = json.Unmarshal(payload, &agify); err != nil {
+		l.Error("error unmarshall agify", err)
+		return 0
+	}
+
+	return agify.Age
 }
 
-func richGender(ctx context.Context,l logger.Interface, data *entity.User)(string){
-	type Genderize struct{
-			Gender string `json:gender`
+func richGender(ctx context.Context, l logger.Interface, data *entity.User) string {
+	type Genderize struct {
+		Gender string `json:gender`
 	}
 	var gender Genderize
 
@@ -64,30 +63,30 @@ func richGender(ctx context.Context,l logger.Interface, data *entity.User)(strin
 	res, err := http.Get(req)
 	if err != nil {
 		l.Error("error making http request: %s\n", err)
-		return "" 
+		return ""
 	}
 
-	payload,err:= io.ReadAll(res.Body)
-	if err!=nil{
+	payload, err := io.ReadAll(res.Body)
+	if err != nil {
 		l.Error("can't read api-body request genderize", err)
-		return "" 
-	}
-	
-	if err = json.Unmarshal(payload, &gender);err!=nil{
-		l.Error("error unmarshall genderizy", err)
-		return "" 
+		return ""
 	}
 
-	return gender.Gender 
+	if err = json.Unmarshal(payload, &gender); err != nil {
+		l.Error("error unmarshall genderizy", err)
+		return ""
+	}
+
+	return gender.Gender
 }
 
-func richNatoinality(ctx context.Context,l logger.Interface, data *entity.User)(string){
-	type Nationalize struct{
-		Country []struct{
+func richNatoinality(ctx context.Context, l logger.Interface, data *entity.User) string {
+	type Nationalize struct {
+		Country []struct {
 			CountryID string `json:"country_id"`
 		} `json:country`
 	}
-	
+
 	var nationality Nationalize
 
 	req := fmt.Sprintf("https://api.nationalize.io/?name=%s", data.Name)
@@ -95,20 +94,19 @@ func richNatoinality(ctx context.Context,l logger.Interface, data *entity.User)(
 	res, err := http.Get(req)
 	if err != nil {
 		l.Error("error making http request: %s\n", err)
-		return "" 
+		return ""
 	}
 
-	payload,err:= io.ReadAll(res.Body)
-	if err!=nil{
+	payload, err := io.ReadAll(res.Body)
+	if err != nil {
 		l.Error("can't read api-body request nationalizy", err)
-		return "" 
+		return ""
 	}
-	
-	if err = json.Unmarshal(payload,&nationality);err!=nil{
+
+	if err = json.Unmarshal(payload, &nationality); err != nil {
 		l.Error("error unmarshall nationalizy", err)
-		return "" 
+		return ""
 	}
 
-	return nationality.Country[0].CountryID 
+	return nationality.Country[0].CountryID
 }
-

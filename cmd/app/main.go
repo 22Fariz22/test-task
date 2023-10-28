@@ -7,14 +7,14 @@ import (
 	"github.com/test-task/internal/config"
 )
 
-func main(){
+func main() {
 	//Configuration
-	cfg,err:= config.NewConfig()
-	if err!=nil{
-		log.Fatalf("main.go - config err: %s",err)
+	cfg, err := config.NewConfig()
+	if err != nil {
+		log.Fatalf("main.go - config err: %s", err)
 	}
 
 	//Run
-	app:= app.NewApp(cfg)
+	app := app.NewApp(cfg)
 	app.Run()
 }

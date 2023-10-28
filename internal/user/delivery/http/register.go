@@ -9,14 +9,14 @@ import (
 func RegisterHTTPEndpointsUser(
 	l logger.Interface,
 	router *gin.RouterGroup,
-	 uc user.UseCase ){
-		h:=NewHandler(l,uc)
-	
-		user:=router.Group("/")
-		{
-			user.POST("/",h.Create)
-			user.GET("/",h.Get)
-			user.DELETE("/",h.Delete)
-			user.PUT("/",h.Update)
-		}
+	uc user.UseCase) {
+	h := NewHandler(l, uc)
+
+	user := router.Group("/")
+	{
+		user.POST("/", h.Create)
+		user.GET("/", h.Get)
+		user.DELETE("/", h.Delete)
+		user.PUT("/", h.Update)
+	}
 }
